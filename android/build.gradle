@@ -16,12 +16,12 @@ buildscript {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 27
     buildToolsVersion "27.0.1"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -44,13 +44,13 @@ repositories {
 
 dependencies {
     // For using the Veritrans Sandbox
-    compile 'com.midtrans:corekit:1.15.0-SANDBOX'
+    compile 'com.midtrans:corekit:1.19.2-SANDBOX'
 
     // For using the Veritrans Productio
     // compile 'com.midtrans:corekit:1.4.2'
 
     // For using the Midtrans Sandbox
-    compile 'com.midtrans:uikit:1.15.0-SANDBOX' // change the number to the latest version
+    compile 'com.midtrans:uikit:1.19.2-SANDBOX' // change the number to the latest version
 
     // For using the Midtrans Production
     //compile 'com.midtrans:uikit:1.10.0' // change the number to the latest version

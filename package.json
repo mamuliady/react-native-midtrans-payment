@@ -1,7 +1,7 @@
 
 {
   "name": "@knax/react-native-midtrans",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "this module for payment gateway, first gateway is midtrans payment gateway, i hope all payment gateway so you can contribute to this module",
   "main": "index.js",
   "keywords": [
