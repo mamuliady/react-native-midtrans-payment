@@ -44,13 +44,13 @@ repositories {
 
 dependencies {
     // For using the Veritrans Sandbox
-    compile 'com.midtrans:corekit:1.19.2-SANDBOX'
+    compile 'com.midtrans:corekit:1.20.2-SANDBOX'
 
     // For using the Veritrans Productio
     // compile 'com.midtrans:corekit:1.4.2'
 
     // For using the Midtrans Sandbox
-    compile 'com.midtrans:uikit:1.19.2-SANDBOX' // change the number to the latest version
+    compile 'com.midtrans:uikit:1.20.2-SANDBOX' // change the number to the latest version
 
     // For using the Midtrans Production
     //compile 'com.midtrans:uikit:1.10.0' // change the number to the latest version

@@ -1,41 +1,28 @@
 
 # react-native-payment-gateway
 
-[![Build Status](https://semaphoreapp.com/api/v1/projects/d4cca506-99be-44d2-b19e-176f36ec8cf1/128505/badge.svg)](https://semaphoreapp.com/boennemann/badges)
-[![NPM version](https://img.shields.io/npm/v/@cycle/core.svg)](https://www.npmjs.com/package/react-native-payment-gateway)
-[![Coverage Status](https://coveralls.io/repos/conventional-changelog/standard-version/badge.svg?branch=)](https://coveralls.io/r/conventional-changelog/standard-version?branch=master)
-[![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/aldente05/react-native-payment-gateway)
-
-merchant backend [NODE JS](https://github.com/aldente05/merchant-server-midtrans)
-
 ## Getting started
 
-`$ npm install react-native-payment-gateway --save`
+`$ npm install @knax/react-native-midtrans --save`
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-payment-gateway`
+No there is no automatic installation, follow the manual installation below
 
 ### Manual installation
 
-
 #### iOS
 
-change Podfile into this or lastest version
-
-#### pod 'MidtransCoreKit', '~> 1.7' 
-#### pod 'MidtransKit', '~> 1.7'
-
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ `react-native-payment-gateway` and add `ReactNativeMidtrans.xcodeproj`
+2. Go to `node_modules` ➜ `@knax/react-native-midtrans` and add `ReactNativeMidtrans.xcodeproj`
 3. In XCode, in the project navigator, select your project. Add `libReactNativeMidtrans.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
-4. Run your project (`Cmd+R`)<
+4. Run your project (`Cmd+R`)
 
 #### Android
 
 1. Open up `android/app/src/main/java/[...]/MainActivity.java`
-  - Add `import com.paymentgateway.ReactNativeMidtransPackage;` to the imports at the top of the file
-  - Add `new ReactNativeMidtransPackage()` to the list returned by the `getPackages()` method
+  - Add `import com.paymentgateway.MidtransPackage;` to the imports at the top of the file
+  - Add `new MidtransPackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
   	```
   	include ':react-native-payment-gateway'
@@ -45,15 +32,20 @@ change Podfile into this or lastest version
   	```
       compile project(':react-native-payment-gateway')
   	```
+4. Append midtrans repository to application level build.gradle
+    ```
+        maven { url "http://dl.bintray.com/pt-midtrans/maven" }
+        maven { url "https://jitpack.io" }
+    ```
 
 ## Usage
 ```javascript
-import PaymentGateway from 'react-native-payment-gateway';
+import PaymentGateway from '@knax/react-native-midtrans';
 
 async pay(){
         const optionConect = {
             clientKey: "your client key",
-            urlMerchant: "https://domain.net/" <<-- will hit https://domain.net/charge
+            urlMerchant: "https://domain.net/" // will hit https://domain.net/charge
         }
 
         const transRequest = {
