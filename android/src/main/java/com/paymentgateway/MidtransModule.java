@@ -21,6 +21,7 @@ import com.midtrans.sdk.corekit.models.UserDetail;
 import com.midtrans.sdk.corekit.models.snap.CreditCard;
 import com.midtrans.sdk.corekit.models.snap.TransactionResult;
 import com.midtrans.sdk.uikit.SdkUIFlowBuilder;
+import com.midtrans.sdk.corekit.core.PaymentMethod;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -170,7 +171,12 @@ public class MidtransModule extends ReactContextBaseJavaModule {
         transactionRequest.setCardPaymentInfo(creditCardOptions.getString("paymentMode"), creditCardOptions.getBoolean("secure"));
 
         MidtransSDK.getInstance().setTransactionRequest(transactionRequest);
-        MidtransSDK.getInstance().startPaymentUiFlow(getCurrentActivity());
+
+        if(transRequest.hasKey("paymentType")) {
+            MidtransSDK.getInstance().startPaymentUiFlow(getCurrentActivity(), PaymentMethod.values()[transRequest.getInt("paymentType")]);
+        } else {
+            MidtransSDK.getInstance().startPaymentUiFlow(getCurrentActivity());
+        }
     }
 
 
