@@ -22,6 +22,8 @@ RCT_EXPORT_METHOD(checkOut:(NSDictionary*) optionConect
     [CONFIG setClientKey:[optionConect valueForKey:@"clientKey"]
              environment:MidtransServerEnvironmentSandbox
        merchantServerURL:[optionConect valueForKey:@"urlMerchant"]];
+    
+    CC_CONFIG.secure3DEnabled = YES;
 
     NSMutableArray *itemitems = [[NSMutableArray alloc] init];
     for (NSDictionary *ele in items) {
