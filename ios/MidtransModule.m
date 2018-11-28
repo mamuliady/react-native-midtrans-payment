@@ -22,7 +22,7 @@ RCT_EXPORT_METHOD(checkOut:(NSDictionary*) optionConect
     [CONFIG setClientKey:[optionConect valueForKey:@"clientKey"]
              environment:MidtransServerEnvironmentSandbox
        merchantServerURL:[optionConect valueForKey:@"urlMerchant"]];
-    
+
     CC_CONFIG.secure3DEnabled = YES;
 
     NSMutableArray *itemitems = [[NSMutableArray alloc] init];
@@ -71,7 +71,7 @@ RCT_EXPORT_METHOD(checkOut:(NSDictionary*) optionConect
          if (token) {
              UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
 
-             MidtransUIPaymentViewController *vc = [[MidtransUIPaymentViewController alloc] initWithToken:token];
+             MidtransUIPaymentViewController *vc = [[MidtransUIPaymentViewController alloc] initWithToken:token andPaymentFeature:[self getPaymentType:transRequest]];
 
              [ctrl presentViewController:vc animated:NO completion:nil];
              //set the delegate
@@ -100,5 +100,30 @@ RCT_EXPORT_METHOD(checkOut:(NSDictionary*) optionConect
 - (void)paymentViewController_paymentCanceled:(MidtransUIPaymentViewController *)viewController {
     NSLog(@"canceled");
 }
-@end
 
+- (enum MidtransPaymentFeature) getPaymentType:(NSDictionary*) paymentType{
+    NSNumber* objectNumber = [paymentType valueForKey:@"paymentType"];
+    int type = [objectNumber intValue];
+    if(type == 0){
+        return MidtransPaymentFeatureCreditCard;
+    }
+    else if(type == 3) {
+            return MidtransPaymentFeatureBankTransferMandiriVA;
+    }
+    else if(type == 4) {
+        return MidtransPaymentFeatureBankTransferPermataVA;
+    }
+    else if(type == 5) {
+         return MidtransPaymentFeatureBankTransferBNIVA;
+    }
+    else if(type == 6) {
+         return MidtransPaymentFeatureBankTransferOtherVA;
+    }
+    else if(type == 7) {
+             return MidtransPaymentFeatureGOPAY;
+    }
+    else{
+        return MidtransPaymentFeatureGOPAY;
+    }
+}
+@end
