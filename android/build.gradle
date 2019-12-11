@@ -20,7 +20,7 @@ android {
     buildToolsVersion "28.0.3"
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 21 //Minimum 21 to automatically activate multi-dex
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"

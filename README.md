@@ -45,7 +45,9 @@ import PaymentGateway from '@knax/react-native-midtrans';
 async pay(){
         const optionConect = {
             clientKey: "your client key",
-            urlMerchant: "https://domain.net/" // will hit https://domain.net/charge
+            urlMerchant: "https://domain.net/" 
+            // will hit https://domain.net/charge
+            // automatically adds /charge endpoint
         }
 
         const transRequest = {
@@ -71,7 +73,7 @@ async pay(){
             userId: "U01",
             address: "street coffee",
             city: "yogyakarta",
-            country: "IDN", <-- must be standard country code
+            country: "IDN", <-- must be standard 3 digit country code
             zipCode: "59382"
         };
 

@@ -1,7 +1,7 @@
 {
-  "name": "@knax/react-native-midtrans",
-  "version": "0.6.2",
-  "description": "this module for payment gateway, first gateway is midtrans payment gateway, i hope all payment gateway so you can contribute to this module",
+  "name": "@yustinwill/react-native-midtrans",
+  "version": "0.1.0",
+  "description": "This module is for midtrans payment gateway on react native",
   "main": "index.js",
   "keywords": [
     "react-native",
@@ -10,7 +10,7 @@
     "gateway",
     "payment gateway"
   ],
-  "author": "Firdaus Ekaputra",
+  "author": "Yustinus William",
   "license": "MIT",
   "peerDependencies": {
     "react-native": "^0.41.2",
