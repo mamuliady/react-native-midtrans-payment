@@ -165,7 +165,7 @@ public class MidtransModule extends ReactContextBaseJavaModule {
 
         CreditCard ccOptions = new CreditCard();
         ccOptions.setSaveCard(creditCardOptions.getBoolean("saveCard"));
-        ccOptions.setSecure(creditCardOptions.getBoolean("saveToken"));
+        // ccOptions.setSecure(creditCardOptions.getBoolean("saveToken"));
         //ccOptions.setChannel(CreditCard.MIGS);
         transactionRequest.setCreditCard(ccOptions);
         transactionRequest.setCardPaymentInfo(creditCardOptions.getString("paymentMode"), creditCardOptions.getBoolean("secure"));

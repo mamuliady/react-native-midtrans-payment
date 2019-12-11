@@ -16,12 +16,12 @@ buildscript {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "27.0.1"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 26
+        minSdkVersion 21
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -44,16 +44,16 @@ repositories {
 
 dependencies {
     // For using the Veritrans Sandbox
-    compile 'com.midtrans:corekit:1.20.2-SANDBOX'
+    implementation 'com.midtrans:corekit:1.23.1-SANDBOX'
 
-    // For using the Veritrans Productio
-    // compile 'com.midtrans:corekit:1.4.2'
+    // For using the Veritrans Production
+    // implementation 'com.midtrans:corekit:1.23.1'
 
     // For using the Midtrans Sandbox
-    compile 'com.midtrans:uikit:1.20.2-SANDBOX' // change the number to the latest version
+    implementation 'com.midtrans:uikit:1.23.1-SANDBOX' // change the number to the latest version
 
     // For using the Midtrans Production
-    //compile 'com.midtrans:uikit:1.10.0' // change the number to the latest version
+    //implementation 'com.midtrans:uikit:1.23.1' // change the number to the latest version
 
-    compile 'com.facebook.react:react-native:+'
+    implementation 'com.facebook.react:react-native:+'
 }
