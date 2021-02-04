@@ -3,7 +3,7 @@
 
 ## Getting started
 
-`$ yarn add @yustinWill/react-native-midtrans-payment`
+`$ yarn add @yustinwill/react-native-midtrans-payment`
 
 ### Mostly automatic installation
 
@@ -12,7 +12,7 @@
 #### iOS
 
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ `@yustinWill/react-native-midtrans-payment` and add `ReactNativeMidtrans.xcodeproj`
+2. Go to `node_modules` ➜ `@yustinwill/react-native-midtrans-payment` and add `ReactNativeMidtrans.xcodeproj`
 3. In XCode, in the project navigator, select your project. Add `libReactNativeMidtrans.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
 4. Run your project (`Cmd+R`)
 
@@ -39,7 +39,7 @@
 
 ## Usage
 ```javascript
-import PaymentGateway from '@yustinWill/react-native-midtrans-payment';
+import PaymentGateway from '@yustinwill/react-native-midtrans-payment';
 
 async pay(){
         const optionConect = {
