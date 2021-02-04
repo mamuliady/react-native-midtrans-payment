@@ -1,13 +1,11 @@
 
-# react-native-payment-gateway
+# react-native-midtrans-payment
 
 ## Getting started
 
 `$ yarn add @yustinwill/react-native-midtrans-payment`
 
 ### Mostly automatic installation
-
-No there is no automatic installation, follow the manual installation below
 
 ### Manual installation
 
