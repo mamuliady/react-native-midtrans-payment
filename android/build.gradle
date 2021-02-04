@@ -20,7 +20,7 @@ android {
     buildToolsVersion "28.0.3"
 
     defaultConfig {
-        minSdkVersion 21 //Minimum 21 to automatically activate multi-dex
+        minSdkVersion 16 //Change to 21 to automatically activate multi-dex
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -44,16 +44,16 @@ repositories {
 
 dependencies {
     // For using the Veritrans Sandbox
-    implementation 'com.midtrans:corekit:1.23.1-SANDBOX'
+    // implementation 'com.midtrans:corekit:1.23.1-SANDBOX'
 
     // For using the Veritrans Production
-    // implementation 'com.midtrans:corekit:1.23.1'
+    implementation 'com.midtrans:corekit:1.23.1'
 
     // For using the Midtrans Sandbox
-    implementation 'com.midtrans:uikit:1.23.1-SANDBOX' // change the number to the latest version
+    // implementation 'com.midtrans:uikit:1.23.1-SANDBOX' // change the number to the latest version
 
     // For using the Midtrans Production
-    //implementation 'com.midtrans:uikit:1.23.1' // change the number to the latest version
+    implementation 'com.midtrans:uikit:1.23.1' // change the number to the latest version
 
     implementation 'com.facebook.react:react-native:+'
 }

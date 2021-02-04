@@ -1,6 +1,9 @@
-
 #import "MidtransModule.h"
 #import <React/RCTLog.h>
+
+@interface MidtransModule ()
+@property (nonatomic, copy) RCTResponseSenderBlock callback;
+@end
 
 @implementation MidtransModule
 
@@ -8,6 +11,11 @@
 {
     return dispatch_get_main_queue();
 }
++ (BOOL)requiresMainQueueSetup
+{
+    return YES;
+}
+
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(checkOut:(NSDictionary*) optionConect
@@ -17,10 +25,10 @@ RCT_EXPORT_METHOD(checkOut:(NSDictionary*) optionConect
                   : (NSDictionary*) mapUserDetail
                   : (NSDictionary*) optionColorTheme
                   : (NSDictionary*) optionFont
-                  :(RCTResponseSenderBlock)resultCheckOut){
-
+                  :(RCTResponseSenderBlock)callback){
+    
     [CONFIG setClientKey:[optionConect valueForKey:@"clientKey"]
-             environment:MidtransServerEnvironmentSandbox
+             environment:[[optionConect valueForKey:@"sandbox"] boolValue] ? MidtransServerEnvironmentSandbox : MidtransServerEnvironmentProduction
        merchantServerURL:[optionConect valueForKey:@"urlMerchant"]];
 
     CC_CONFIG.secure3DEnabled = YES;
@@ -63,6 +71,8 @@ RCT_EXPORT_METHOD(checkOut:(NSDictionary*) optionConect
     [[MidtransTransactionDetails alloc] initWithOrderID:[transRequest valueForKey:@"transactionId"]
                                          andGrossAmount:totalAmount];
 
+    self.callback = callback;
+    
     [[MidtransMerchantClient shared]
      requestTransactionTokenWithTransactionDetails:transactionDetail
      itemDetails:itemitems
@@ -79,26 +89,58 @@ RCT_EXPORT_METHOD(checkOut:(NSDictionary*) optionConect
          }
          else {
              NSLog(@"%@", error);
+             callback(@[@"failed"]);
          }
      }];
 };
 
 #pragma mark - MidtransUIPaymentViewControllerDelegate
 
-- (void)paymentViewController:(MidtransUIPaymentViewController *)viewController paymentSuccess:(MidtransTransactionResult *)result {
-    NSLog(@"success: %@", result);
+- (void)finishPayment:(MidtransTransactionResult *)result error:(NSError *)error finishedStatus:(NSString *)status
+{
+    if (self.callback == nil) {
+        RCTLogInfo(@"callback is null");
+        return;
+    }
+    
+    RCTLogInfo(@"finishPayment: %@", result);
+    
+    if (error) {
+        self.callback(@[@"failed"]);
+//        self.callback(@[error]);
+        self.callback = nil;
+    } else if (result) {
+        if (![result.paymentType isEqual: @"gopay"] || [result.transactionStatus isEqual: @"settlement"]) // add this to temporary fix gopay return status pending instead of cancelled
+        {
+            self.callback(@[status]);
+//            self.callback(@[result.transactionStatus, [NSNull null]]);
+            self.callback = nil;
+        }
+    } else {
+        self.callback(@[@"cancelled"]);
+//        self.callback(@[@"cancelled", [NSNull null]]);
+        self.callback = nil;
+    }
+}
+
+- (void)paymentViewController:(MidtransUIPaymentViewController *)viewController paymentSuccess:(MidtransTransactionResult *)result{
+    RCTLogInfo(@"%@", result);
+    [self finishPayment:result error:nil finishedStatus:@"success"];
 }
 
 - (void)paymentViewController:(MidtransUIPaymentViewController *)viewController paymentFailed:(NSError *)error {
-//    [self showAlertError:error];
+    RCTLogInfo(@"%@", error);
+    [self finishPayment:nil error:error finishedStatus:@"failed"];
 }
 
 - (void)paymentViewController:(MidtransUIPaymentViewController *)viewController paymentPending:(MidtransTransactionResult *)result {
-    NSLog(@"pending: %@", result);
+    RCTLogInfo(@"%@", result);
+    [self finishPayment:result error:nil finishedStatus:@"pending"];
 }
 
 - (void)paymentViewController_paymentCanceled:(MidtransUIPaymentViewController *)viewController {
-    NSLog(@"canceled");
+    RCTLogInfo(@"Cancel Transaction");
+    [self finishPayment:nil error:nil finishedStatus:@"cancelled"];
 }
 
 - (enum MidtransPaymentFeature) getPaymentType:(NSDictionary*) paymentType{

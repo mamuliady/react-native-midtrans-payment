@@ -7,7 +7,7 @@ import com.midtrans.sdk.corekit.callback.TransactionFinishedCallback;
 import com.midtrans.sdk.corekit.models.snap.TransactionResult;
 
 /**
- * Created by AlSahfer on 23/11/17.
+ * Updated by Yustinus on 4/2/2021.
  */
 
 public class TransactionCallback implements TransactionFinishedCallback {

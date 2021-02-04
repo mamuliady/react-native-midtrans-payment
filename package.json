@@ -1,7 +1,7 @@
 {
   "name": "@yustinwill/react-native-midtrans",
-  "version": "0.1.0",
-  "description": "This module is for midtrans payment gateway on react native",
+  "version": "0.1.1",
+  "description": "This module is what I'm using for midtrans payment gateway on my react native project",
   "main": "index.js",
   "keywords": [
     "react-native",

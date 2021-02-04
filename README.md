@@ -3,7 +3,7 @@
 
 ## Getting started
 
-`$ npm install @knax/react-native-midtrans --save`
+`$ yarn add @yustinwill/react-native-midtrans`
 
 ### Mostly automatic installation
 
@@ -14,7 +14,7 @@ No there is no automatic installation, follow the manual installation below
 #### iOS
 
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ `@knax/react-native-midtrans` and add `ReactNativeMidtrans.xcodeproj`
+2. Go to `node_modules` ➜ `@yustinwill/react-native-midtrans` and add `ReactNativeMidtrans.xcodeproj`
 3. In XCode, in the project navigator, select your project. Add `libReactNativeMidtrans.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
 4. Run your project (`Cmd+R`)
 
@@ -40,14 +40,13 @@ No there is no automatic installation, follow the manual installation below
 
 ## Usage
 ```javascript
-import PaymentGateway from '@knax/react-native-midtrans';
+import PaymentGateway from '@yustinwill/react-native-midtrans';
 
 async pay(){
         const optionConect = {
             clientKey: "your client key",
-            urlMerchant: "https://domain.net/" 
-            // will hit https://domain.net/charge
-            // automatically adds /charge endpoint
+            urlMerchant: "https://domain.net/",
+            sandbox: false // this affect iOS
         }
 
         const transRequest = {
@@ -90,8 +89,21 @@ async pay(){
         }
 
         const callback = (res) => {
-            console.log(res)
-        };
+			console.log(res)
+			switch (res) {
+				case 'success':
+				case 'challenge':
+				case 'pending':
+					// Completed
+					break;
+				case 'cancelled':
+					// Cancelled
+					break;
+				default:
+					// Failed
+					break;
+			}
+		};
 
         PaymentGateway.checkOut(
             optionConect,
