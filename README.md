@@ -3,7 +3,7 @@
 
 ## Getting started
 
-`$ yarn add @yustinwill/react-native-midtrans`
+`$ yarn add @yustinwill/react-native-midtrans-payment`
 
 ### Mostly automatic installation
 
@@ -14,7 +14,7 @@ No there is no automatic installation, follow the manual installation below
 #### iOS
 
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ `@yustinwill/react-native-midtrans` and add `ReactNativeMidtrans.xcodeproj`
+2. Go to `node_modules` ➜ `@yustinwill/react-native-midtrans-payment` and add `ReactNativeMidtrans.xcodeproj`
 3. In XCode, in the project navigator, select your project. Add `libReactNativeMidtrans.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
 4. Run your project (`Cmd+R`)
 
@@ -25,22 +25,23 @@ No there is no automatic installation, follow the manual installation below
   - Add `new MidtransPackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
   	```
-  	include ':react-native-payment-gateway'
-  	project(':react-native-payment-gateway').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-payment-gateway/android')
+  	include ':react-native-midtrans-payment'
+  	project(':react-native-midtrans-payment').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-midtrans-payment/android')
   	```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
   	```
-      compile project(':react-native-payment-gateway')
+      compile project(':react-native-midtrans-payment')
   	```
 4. Append midtrans repository to application level build.gradle
     ```
         maven { url "http://dl.bintray.com/pt-midtrans/maven" }
         maven { url "https://jitpack.io" }
     ```
+5. Change t
 
 ## Usage
 ```javascript
-import PaymentGateway from '@yustinwill/react-native-midtrans';
+import PaymentGateway from '@yustinwill/react-native-midtrans-payment';
 
 async pay(){
         const optionConect = {
