@@ -1,5 +1,5 @@
 {
-  "name": "@yustinwill/react-native-midtrans-payment",
+  "name": "@yustinWill/react-native-midtrans-payment",
   "version": "0.1.1",
   "description": "This module is what I'm using for midtrans payment gateway on my react native project",
   "main": "index.js",
@@ -10,10 +10,41 @@
     "gateway",
     "payment gateway"
   ],
+  "repository": "https://github.com/yustinWill/react-native-midtrans-payment",
   "author": "Yustinus William",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yustinWill/react-native-midtrans-payment/issues"
+  },
+  "homepage": "https://github.com/yustinWill/react-native-midtrans-payment#readme",
   "peerDependencies": {
-    "react-native": "^0.60.5",
-    "react-native-windows": "0.41.0-rc.1"
-  }
+    "react": "*",
+    "react-native": "*"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": ["node_modules/", "lib/"],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
 }
