@@ -1,5 +1,5 @@
 {
-  "name": "@yustinWill/react-native-midtrans-payment",
+  "name": "@yustinwill/react-native-midtrans-payment",
   "version": "0.1.1",
   "description": "This module is what I'm using for midtrans payment gateway on my react native project",
   "main": "index.js",
