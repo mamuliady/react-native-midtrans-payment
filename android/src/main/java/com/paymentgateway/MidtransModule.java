@@ -10,18 +10,19 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.midtrans.sdk.corekit.callback.TransactionFinishedCallback;
 import com.midtrans.sdk.corekit.core.Constants;
-import com.midtrans.sdk.corekit.core.LocalDataHandler;
+// import com.midtrans.sdk.corekit.core.LocalDataHandler;
 import com.midtrans.sdk.corekit.core.MidtransSDK;
 import com.midtrans.sdk.corekit.core.SdkCoreFlowBuilder;
 import com.midtrans.sdk.corekit.core.TransactionRequest;
 import com.midtrans.sdk.corekit.core.themes.CustomColorTheme;
 import com.midtrans.sdk.corekit.models.ItemDetails;
-import com.midtrans.sdk.corekit.models.UserAddress;
-import com.midtrans.sdk.corekit.models.UserDetail;
+import com.midtrans.sdk.corekit.models.BillingAddress;
+import com.midtrans.sdk.corekit.models.ShippingAddress;
+import com.midtrans.sdk.corekit.models.CustomerDetails;
 import com.midtrans.sdk.corekit.models.snap.CreditCard;
 import com.midtrans.sdk.corekit.models.snap.TransactionResult;
 import com.midtrans.sdk.uikit.SdkUIFlowBuilder;
-import com.midtrans.sdk.corekit.core.PaymentMethod;
+import com.midtrans.sdk.corekit.core.UIKitCustomSetting;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -117,20 +118,28 @@ public class MidtransModule extends ReactContextBaseJavaModule {
         Object self;
 
         //setUser Detail
-        UserDetail userDetail = new UserDetail();
-        userDetail.setUserFullName(mapUserDetail.getString("fullName"));
+        CustomerDetails userDetail = new CustomerDetails();
+        userDetail.setFirstName(mapUserDetail.getString("fullName"));
         userDetail.setEmail(mapUserDetail.getString("email"));
-        userDetail.setPhoneNumber(mapUserDetail.getString("phoneNumber"));
-        userDetail.setUserId(mapUserDetail.getString("userId"));
+        userDetail.setPhone(mapUserDetail.getString("phoneNumber"));
+        userDetail.setCustomerIdentifier(mapUserDetail.getString("userId"));
 
-        ArrayList<UserAddress> userAddresses = new ArrayList<>();
-        UserAddress userAddress = new UserAddress();
+        // ArrayList<UserAddress> userAddresses = new ArrayList<>();
+        BillingAddress userAddress = new BillingAddress();
         userAddress.setAddress(mapUserDetail.getString("address"));
         userAddress.setCity(mapUserDetail.getString("city"));
-        userAddress.setCountry(mapUserDetail.getString("country"));
-        userAddress.setZipcode(mapUserDetail.getString("zipCode"));
-        userAddress.setAddressType(Constants.ADDRESS_TYPE_BOTH);
-        userAddresses.add(userAddress);
+        // userAddress.setCountry("INDONESIA");
+        userAddress.setPostalCode(mapUserDetail.getString("zipCode"));
+        // userAddress.setAddressType(Constants.ADDRESS_TYPE_BOTH);
+        // userAddresses.add(userAddress);
+        userDetail.setBillingAddress(userAddress);
+        ShippingAddress shippingAddress = new ShippingAddress();
+        shippingAddress.setAddress(mapUserDetail.getString("address"));
+        shippingAddress.setCity(mapUserDetail.getString("city"));
+        // shippingAddress.setCountry("INDONESIA");
+        shippingAddress.setPostalCode(mapUserDetail.getString("zipCode"));
+        userDetail.setShippingAddress(shippingAddress);
+
 
         //Custom color Theme
         CustomColorTheme colorTheme = new CustomColorTheme(
@@ -154,14 +163,29 @@ public class MidtransModule extends ReactContextBaseJavaModule {
                 .setColorTheme(colorTheme)
                 .buildSDK();
 
-        userDetail.setUserAddresses(userAddresses);
-        LocalDataHandler.saveObject("user_details", userDetail);
+        // userDetail.setUserAddresses(userAddresses);
+        // LocalDataHandler.saveObject("user_details", userDetail);
 
         TransactionRequest transactionRequest = new TransactionRequest(
                 transRequest.getString("transactionId"),
                 transRequest.getInt("totalAmount"));
 
-        setItemDetail(itemDetails, transactionRequest);
+        transactionRequest.setCustomerDetails(userDetail);
+        ArrayList<ItemDetails> itemDetailsList = new ArrayList<>();
+
+        for(int a=0; a < itemDetails.size(); a++){
+            ReadableMap rmItem = itemDetails.getMap(a);
+            String id = rmItem.getString("id");
+            int price = rmItem.getInt("price");
+            int qty = rmItem.getInt("qty");
+            String name = rmItem.getString("name");
+            ItemDetails itemDetail = new ItemDetails(id, price, qty, name);
+
+            // Create array list and add above item details in it and then set it to transaction request.
+            itemDetailsList.add(itemDetail);
+
+        }
+        transactionRequest.setItemDetails(itemDetailsList);
 
         CreditCard ccOptions = new CreditCard();
         ccOptions.setSaveCard(creditCardOptions.getBoolean("saveCard"));
@@ -169,14 +193,12 @@ public class MidtransModule extends ReactContextBaseJavaModule {
         //ccOptions.setChannel(CreditCard.MIGS);
         transactionRequest.setCreditCard(ccOptions);
         transactionRequest.setCardPaymentInfo(creditCardOptions.getString("paymentMode"), creditCardOptions.getBoolean("secure"));
+        UIKitCustomSetting setting = MidtransSDK.getInstance().getUIKitCustomSetting();
+        setting.setSkipCustomerDetailsPages(true);
+        MidtransSDK.getInstance().setUIKitCustomSetting(setting);
 
         MidtransSDK.getInstance().setTransactionRequest(transactionRequest);
-
-        if(transRequest.hasKey("paymentType")) {
-            MidtransSDK.getInstance().startPaymentUiFlow(getCurrentActivity(), PaymentMethod.values()[transRequest.getInt("paymentType")]);
-        } else {
-            MidtransSDK.getInstance().startPaymentUiFlow(getCurrentActivity());
-        }
+        MidtransSDK.getInstance().startPaymentUiFlow(getCurrentActivity());
     }
 
 
