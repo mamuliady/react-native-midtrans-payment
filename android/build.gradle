@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath("com.android.tools.build:gradle:3.5.4")
     }
 }
 
@@ -38,22 +38,21 @@ repositories {
         name 'Google'
     }
     // Add the midtrans repository into the list of repositories
-    maven { url "http://dl.bintray.com/pt-midtrans/maven" }
     maven { url "https://jitpack.io" }
 }
 
 dependencies {
     // For using the Veritrans Sandbox
-    // implementation 'com.midtrans:corekit:1.23.1-SANDBOX'
+    // implementation 'com.midtrans:corekit:1.30.1-SANDBOX'
 
     // For using the Veritrans Production
-    implementation 'com.midtrans:corekit:1.23.1'
+    implementation 'com.midtrans:corekit:1.30.1'
 
     // For using the Midtrans Sandbox
-    // implementation 'com.midtrans:uikit:1.23.1-SANDBOX' // change the number to the latest version
+    // implementation 'com.midtrans:uikit:1.30.1-SANDBOX' // change the number to the latest version
 
     // For using the Midtrans Production
-    implementation 'com.midtrans:uikit:1.23.1' // change the number to the latest version
+    implementation 'com.midtrans:uikit:1.30.1' // change the number to the latest version
 
     implementation 'com.facebook.react:react-native:+'
 }
